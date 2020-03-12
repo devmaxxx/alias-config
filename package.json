@@ -1,6 +1,6 @@
 {
   "name": "@arenuzzz/alias-config",
-  "version": "0.0.2-alpha.0.0.2",
+  "version": "0.0.2-alpha.0.0.3",
   "description": "Config for aliases",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
