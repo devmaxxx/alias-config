@@ -1,4 +1,5 @@
 {
+  "parser": "babel-eslint",
   "extends": ["plugin:jest/all"],
   "rules": {
     "jest/no-disabled-tests": "warn",
@@ -6,5 +7,11 @@
     "jest/no-identical-title": "error",
     "jest/prefer-to-have-length": "warn",
     "jest/valid-expect": "error"
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true
+    }
   }
 }
