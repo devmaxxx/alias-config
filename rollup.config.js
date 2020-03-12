@@ -1,9 +1,16 @@
 import ts from '@wessberg/rollup-plugin-ts';
+import analyze from 'rollup-plugin-analyzer';
+import del from 'rollup-plugin-delete';
 import pkg from './package.json';
+
+const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
 export default [
   // browser-friendly UMD build
   {
+    watch: {
+      clearScreen: false,
+    },
     input: 'src/index.ts',
     output: [
       {
@@ -18,12 +25,16 @@ export default [
       },
     ],
     plugins: [
+      del({ targets: 'dist/*' }),
       // resolve(), // so Rollup can find `ms`
       // commonjs(), // so Rollup can convert `ms` to an ES module
       ts({
         tsconfig: 'tsconfig.build.json',
         transpileOnly: true,
+        // tsconfig: IS_PRODUCTION ? 'tsconfig.prod.json' : 'tsconfig.json',
+        // transpiler: 'babel',
       }),
+      analyze(),
       // typescript(), // so Rollup can convert TypeScript to JavaScript
     ],
   },
