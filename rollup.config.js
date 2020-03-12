@@ -27,37 +27,23 @@ export default [
         sourcemap: true,
       },
     ],
-    external: [],
+    external: [
+      ...Object.keys(pkg.dependencies || {}),
+      ...Object.keys(pkg.peerDependencies || {}),
+    ],
     plugins: [
       json(),
       typescript2({
+        typescript: require('typescript'),
         tsconfig: 'tsconfig.build.json',
-        // useTsconfigDeclarationDir: true,
+        useTsconfigDeclarationDir: true,
       }),
       commonjs(),
       resolve(),
-      terser({}),
+      terser(),
       del({ targets: 'dist/*' }),
       analyze(),
       sourcemaps(),
     ],
   },
-
-  // CommonJS (for Node) and ES module (for bundlers) build.
-  // (We could have three entries in the configuration array
-  // instead of two, but it's quicker to generate multiple
-  // builds from a single configuration where possible, using
-  // an array for the `output` option, where we can specify
-  // `file` and `format` for each target)
-  // {
-  //   input: 'src/index.ts',
-  //   external: ['ms'],
-  //   plugins: [
-  //     typescript(), // so Rollup can convert TypeScript to JavaScript
-  //   ],
-  //   output: [
-  //     { file: pkg.main, format: 'cjs' },
-  //     { file: pkg.module, format: 'es' },
-  //   ],
-  // },
 ];

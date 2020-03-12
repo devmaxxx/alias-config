@@ -4,6 +4,7 @@
   "exclude": ["**/__tests__/**/*"],
   "compilerOptions": {
     "declaration": true,
-    "declarationMap": true
+    "declarationMap": true,
+    "declarationDir": "./dist"
   }
 }
