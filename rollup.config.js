@@ -1,12 +1,15 @@
-import ts from '@wessberg/rollup-plugin-ts';
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import sourcemaps from 'rollup-plugin-sourcemaps';
+import typescript2 from 'rollup-plugin-typescript2';
+import json from '@rollup/plugin-json';
 import analyze from 'rollup-plugin-analyzer';
 import del from 'rollup-plugin-delete';
+import { terser } from 'rollup-plugin-terser';
+
 import pkg from './package.json';
 
-const IS_PRODUCTION = process.env.NODE_ENV === 'production';
-
 export default [
-  // browser-friendly UMD build
   {
     watch: {
       clearScreen: false,
@@ -24,18 +27,19 @@ export default [
         sourcemap: true,
       },
     ],
+    external: [],
     plugins: [
-      del({ targets: 'dist/*' }),
-      // resolve(), // so Rollup can find `ms`
-      // commonjs(), // so Rollup can convert `ms` to an ES module
-      ts({
+      json(),
+      typescript2({
         tsconfig: 'tsconfig.build.json',
-        transpileOnly: true,
-        // tsconfig: IS_PRODUCTION ? 'tsconfig.prod.json' : 'tsconfig.json',
-        // transpiler: 'babel',
+        // useTsconfigDeclarationDir: true,
       }),
+      commonjs(),
+      resolve(),
+      terser({}),
+      del({ targets: 'dist/*' }),
       analyze(),
-      // typescript(), // so Rollup can convert TypeScript to JavaScript
+      sourcemaps(),
     ],
   },
 
