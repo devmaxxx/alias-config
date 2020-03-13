@@ -23,14 +23,15 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Use Node.js ${{ matrix.node-version }}
-      - uses: actions/setup-node@v1
+        uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: yarn install
-      - run: yarn test
-        env:
-            CI: true
-
+      - name: Install dependencies
+        run: |
+          yarn install
+      - name: Run tests
+        run: |
+          yarn test
   # publish-npm:
   #   needs: build
   #   runs-on: ubuntu-latest
