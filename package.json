@@ -13,7 +13,8 @@
     "dev": "rollup -c -w",
     "test": "jest",
     "test:watch": "jest --watch",
-    "pretest": "npm run build"
+    "pretest": "npm run build",
+    "coverage": "npm run pretest && jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
@@ -43,6 +44,7 @@
     "@types/node": "^13.9.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^25.1.0",
+    "coveralls": "^3.0.9",
     "eslint": "^6.8.0",
     "eslint-plugin-jest": "^23.8.2",
     "faker": "^4.1.0",
