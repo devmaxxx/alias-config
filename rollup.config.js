@@ -3,11 +3,13 @@ import commonjs from '@rollup/plugin-commonjs';
 import sourcemaps from 'rollup-plugin-sourcemaps';
 import typescript2 from 'rollup-plugin-typescript2';
 import json from '@rollup/plugin-json';
-import analyze from 'rollup-plugin-analyzer';
+import visualizer from 'rollup-plugin-visualizer';
 import del from 'rollup-plugin-delete';
 import { terser } from 'rollup-plugin-terser';
 
 import pkg from './package.json';
+
+const isProduction = process.env.NODE_ENV === 'production';
 
 export default [
   {
@@ -26,24 +28,28 @@ export default [
         format: 'esm',
         sourcemap: true,
       },
-    ],
+    ].filter(Boolean),
     external: [
       ...Object.keys(pkg.dependencies || {}),
       ...Object.keys(pkg.peerDependencies || {}),
     ],
     plugins: [
+      del({ targets: 'dist/*' }),
       json(),
       typescript2({
         typescript: require('typescript'),
-        tsconfig: 'tsconfig.build.json',
-        useTsconfigDeclarationDir: true,
+        tsconfig: isProduction ? 'tsconfig.build.json' : 'tsconfig.json',
+        useTsconfigDeclarationDir: isProduction,
       }),
       commonjs(),
       resolve(),
-      terser(),
-      del({ targets: 'dist/*' }),
-      analyze(),
       sourcemaps(),
-    ],
+      isProduction && terser(),
+      isProduction &&
+        visualizer({
+          filename: './dist/stats.html',
+          template: 'circlepacking',
+        }),
+    ].filter(Boolean),
   },
 ];
