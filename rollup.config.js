@@ -41,8 +41,10 @@ export default [
         tsconfig: isProduction ? 'tsconfig.build.json' : 'tsconfig.json',
         useTsconfigDeclarationDir: isProduction,
       }),
+      resolve({
+        // preferBuiltins: true,
+      }),
       commonjs(),
-      resolve(),
       sourcemaps(),
       isProduction && terser(),
       isProduction &&

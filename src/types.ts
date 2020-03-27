@@ -1,3 +1,10 @@
-export type Sum1 = number;
-export type Sum2 = number;
-export type SumResult = number;
+export type Aliases = { [key: string]: string };
+export type TsConfigPaths = { [key: string]: Array<string> };
+export interface TsconfigFile {
+  compilerOptions: {
+    baseUrl: string;
+    paths: TsConfigPaths;
+  };
+}
+
+export type AliasConfig = { paths: TsConfigPaths; pathPrefix: string };

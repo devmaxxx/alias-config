@@ -1,2 +1,2 @@
-export { sum } from './sum';
-export { pow } from './pow';
+export { parseTsConfig } from './parseTsConfig';
+export { createWebpackAliases } from './createWebpackAliases';
