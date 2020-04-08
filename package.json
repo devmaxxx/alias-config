@@ -65,5 +65,8 @@
   ],
   "engines": {
     "node": ">=10.15.3"
+  },
+  "dependencies": {
+    "chalk": "^4.0.0"
   }
 }
