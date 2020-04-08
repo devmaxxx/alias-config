@@ -1,10 +1,15 @@
 export type Aliases = { [key: string]: string };
-export type TsConfigPaths = { [key: string]: Array<string> };
+
+export type TsConfigPaths = { [key: string]: string[] };
 export interface TsconfigFile {
-  compilerOptions: {
-    baseUrl: string;
-    paths: TsConfigPaths;
+  compilerOptions?: {
+    baseUrl?: string;
+    paths?: TsConfigPaths;
   };
 }
 
-export type AliasConfig = { paths: TsConfigPaths; pathPrefix: string };
+export type AliasConfig = {
+  paths: TsConfigPaths;
+  baseUrl: string;
+  dirname: string;
+};

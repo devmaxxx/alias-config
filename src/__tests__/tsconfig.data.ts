@@ -1,4 +1,5 @@
 export const mockAliasConfig = {
+  baseUrl: './src',
   paths: {
     '@api/*': ['api/*'],
     '@assets': ['assets'],
@@ -15,5 +16,5 @@ export const mockAliasConfig = {
     '@lib/*': ['lib/*'],
     '@root/*': ['./*'],
   },
-  pathPrefix: 'E:\\projects\\alias-config\\src',
+  dirname: '.',
 };

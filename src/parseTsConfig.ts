@@ -1,4 +1,4 @@
-import { resolve } from 'path';
+import chalk from 'chalk';
 
 import { AliasConfig, TsconfigFile } from './types';
 
@@ -6,8 +6,23 @@ export function parseTsConfig(
   tsconfig: TsconfigFile,
   dirname = '.'
 ): AliasConfig {
-  const { baseUrl, paths } = tsconfig.compilerOptions;
-  const pathPrefix = resolve(dirname, baseUrl);
+  if (
+    !(
+      tsconfig &&
+      tsconfig.compilerOptions &&
+      typeof tsconfig.compilerOptions === 'object'
+    )
+  ) {
+    throw new Error(chalk.red(`[alias-config] tsconfig is wrong!`));
+  }
 
-  return { paths, pathPrefix };
+  const { baseUrl, paths } = tsconfig.compilerOptions;
+
+  if (!(baseUrl && paths)) {
+    throw new Error(
+      chalk.red(`[alias-config] tsconfig "baseUrl" or "paths" doesn't exist!`)
+    );
+  }
+
+  return { paths, baseUrl, dirname };
 }
