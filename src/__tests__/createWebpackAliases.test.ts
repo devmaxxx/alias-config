@@ -24,5 +24,5 @@ describe('createWebpackAliases', () => {
     expect(typeof aliases).toBe('object');
   });
 
-  it.todo('should throw error if config is damaged');
+  it.todo('should throw error if config is wrong');
 });
