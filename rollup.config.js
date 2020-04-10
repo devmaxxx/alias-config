@@ -3,6 +3,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import sourcemaps from 'rollup-plugin-sourcemaps';
 import typescript2 from 'rollup-plugin-typescript2';
 import json from '@rollup/plugin-json';
+import builtins from 'rollup-plugin-node-builtins';
 import visualizer from 'rollup-plugin-visualizer';
 import del from 'rollup-plugin-delete';
 import { terser } from 'rollup-plugin-terser';
@@ -41,9 +42,8 @@ export default [
         tsconfig: isProduction ? 'tsconfig.build.json' : 'tsconfig.json',
         useTsconfigDeclarationDir: isProduction,
       }),
-      resolve({
-        // preferBuiltins: true,
-      }),
+      builtins(),
+      resolve(),
       commonjs(),
       sourcemaps(),
       isProduction && terser(),
