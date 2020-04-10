@@ -1,15 +1,24 @@
 export type Aliases = { [key: string]: string };
 
-export type TsConfigPaths = { [key: string]: string[] };
-export interface TsconfigFile {
+export type ConfigPaths = { [key: string]: string[] };
+export interface Config {
   compilerOptions?: {
     baseUrl?: string;
-    paths?: TsConfigPaths;
+    paths?: ConfigPaths;
   };
 }
 
 export type AliasConfig = {
-  paths: TsConfigPaths;
+  paths: ConfigPaths;
   baseUrl: string;
   dirname: string;
+};
+
+export type AliasOptions = {
+  keyMapper: (value: string, config: AliasConfig, options?: object) => string;
+  valueMapper: (
+    value: string[],
+    config: AliasConfig,
+    options?: object
+  ) => string;
 };

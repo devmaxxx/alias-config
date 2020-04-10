@@ -1,4 +1,5 @@
 export const mockAliasConfig = {
+  dirname: '.',
   baseUrl: './src',
   paths: {
     '@api/*': ['api/*'],
@@ -16,5 +17,7 @@ export const mockAliasConfig = {
     '@lib/*': ['lib/*'],
     '@root/*': ['./*'],
   },
-  dirname: '.',
 };
+
+export const mockJestAliases = {};
+export const mockWebpackAliases = {};

@@ -1,3 +1,3 @@
-export { parseTsConfig } from './parseTsConfig';
+export { parseConfig } from './core/parseConfig';
 export { createWebpackAliases } from './createWebpackAliases';
 export { createJestAliases } from './createJestAliases';

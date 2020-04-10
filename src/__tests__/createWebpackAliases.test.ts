@@ -1,7 +1,13 @@
 import { createWebpackAliases } from '../createWebpackAliases';
-import { parseTsConfig } from '../parseTsConfig';
+import { parseConfig } from '../core/parseConfig';
 
-jest.mock('../parseTsConfig');
+import { mockAliasConfig } from './mock-data';
+
+jest.mock('../core/parseConfig', () => ({
+  parseConfig() {
+    return mockAliasConfig;
+  },
+}));
 
 describe('createWebpackAliases', () => {
   it('should be defined and function', () => {
@@ -14,9 +20,9 @@ describe('createWebpackAliases', () => {
   it('should return aliases', () => {
     expect.assertions(2);
 
-    const tsconfig: any = {};
+    const config: any = {};
 
-    const aliasConfig = parseTsConfig(tsconfig);
+    const aliasConfig = parseConfig(config);
 
     const aliases = createWebpackAliases(aliasConfig);
 
