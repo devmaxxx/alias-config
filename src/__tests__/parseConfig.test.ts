@@ -1,6 +1,6 @@
 import { parseConfig } from '../core/parseConfig';
 
-import { mockAliasConfig } from './mock-data';
+import { mockAliasConfig } from './data.mock';
 import tsConfig from './tsconfig.test.json';
 
 describe('parseConfig:', () => {

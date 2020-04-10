@@ -1,7 +1,7 @@
 import { createJestAliases } from '../createJestAliases';
 import { parseConfig } from '../core/parseConfig';
 
-import { mockAliasConfig, mockJestAliases } from './mock-data';
+import { mockAliasConfig, mockJestAliases } from './data.mock';
 
 jest.mock('../core/parseConfig', () => ({
   parseConfig() {

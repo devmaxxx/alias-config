@@ -1,7 +1,7 @@
 import { createWebpackAliases } from '../createWebpackAliases';
 import { parseConfig } from '../core/parseConfig';
 import path from 'path';
-import { mockAliasConfig, mockWebpackAliases } from './mock-data';
+import { mockAliasConfig, mockWebpackAliases } from './data.mock';
 
 jest.mock('../core/parseConfig', () => ({
   parseConfig() {
