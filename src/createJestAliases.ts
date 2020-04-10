@@ -1,39 +1,23 @@
-import { AliasConfig, Aliases } from './types';
+import { AliasConfig } from './types';
+import { createAliases } from './core/createAliases';
 
-export const jestRootPrefix = '<rootDir>/';
-export const tsconfigRootPrefix = './';
+const jestRootPrefix = '<rootDir>/';
 
-const keyFactory = (key: string): string => `^${key.replace(/\*/, '(.*)')}`;
-
-const valueFactory = (values: Array<string>, baseUrl: string): string =>
-  `${baseUrl}/${values[0].replace(/\.\/\*|\*/, '$1')}`;
-
-const connectPath = (
-  path: [string, string[]],
-  baseUrl: string
-): { [key: string]: string } => ({
-  [keyFactory(path[0])]: valueFactory(path[1], baseUrl),
-});
-
-const convertToObject = (result: {}, item: {}) => ({
-  ...result,
-  ...item,
-});
-
-const pathFactory = (paths: { [key: string]: string[] }, baseUrl: string) =>
-  Object.entries(paths)
-    .map((item) => connectPath(item, baseUrl))
-    .reduce(convertToObject, {});
-
-export const baseUrlFactory = (baseUrl: string): string =>
-  baseUrl.startsWith(tsconfigRootPrefix)
-    ? baseUrl.replace(tsconfigRootPrefix, jestRootPrefix)
+function getRootPrefix(baseUrl: string): string {
+  return baseUrl.startsWith('./')
+    ? baseUrl.replace('./', jestRootPrefix)
     : `${jestRootPrefix}${baseUrl}`;
+}
 
 export function createJestAliases(config: AliasConfig) {
-  const transformedBaseUrl = baseUrlFactory(config.baseUrl);
+  return createAliases(config, {
+    keyMapper(key) {
+      return `^${key.replace(/\*/, '(.*)')}`;
+    },
+    valueMapper(value, config) {
+      const rootPrefix = getRootPrefix(config.baseUrl);
 
-  const aliases: Aliases = pathFactory(config.paths, transformedBaseUrl);
-
-  return aliases;
+      return `${rootPrefix}/${value[0].replace(/\.\/\*|\*/, '$1')}`;
+    },
+  });
 }

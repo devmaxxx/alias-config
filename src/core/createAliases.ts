@@ -12,10 +12,10 @@ export function createAliases(
 function pathMapper(
   path: [string, string[]],
   config: AliasConfig,
-  { keyMapper, valueMapper, ...options }: AliasOptions
+  options: AliasOptions
 ): Aliases {
   return {
-    [keyMapper(path[0], config, options)]: valueMapper(
+    [options.keyMapper(path[0], config, options)]: options.valueMapper(
       path[1],
       config,
       options

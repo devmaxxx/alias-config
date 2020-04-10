@@ -15,10 +15,14 @@ export type AliasConfig = {
 };
 
 export type AliasOptions = {
-  keyMapper: (value: string, config: AliasConfig, options?: object) => string;
+  keyMapper: (
+    value: string,
+    config: AliasConfig,
+    options: AliasOptions
+  ) => string;
   valueMapper: (
     value: string[],
     config: AliasConfig,
-    options?: object
+    options: AliasOptions
   ) => string;
 };
