@@ -1,7 +1,7 @@
 import { createWebpackAliases } from '../createWebpackAliases';
 import { parseConfig } from '../core/parseConfig';
-
-import { mockAliasConfig } from './mock-data';
+import path from 'path';
+import { mockAliasConfig, mockWebpackAliases } from './mock-data';
 
 jest.mock('../core/parseConfig', () => ({
   parseConfig() {
@@ -21,13 +21,21 @@ describe('createWebpackAliases', () => {
     expect.assertions(2);
 
     const config: any = {};
-
     const aliasConfig = parseConfig(config);
-
     const aliases = createWebpackAliases(aliasConfig);
 
-    expect(aliases).not.toBeNull();
-    expect(typeof aliases).toBe('object');
+    function mapAliases(aliases: { [key: string]: string }) {
+      return Object.entries(aliases).reduce(
+        (acc, item) => ({
+          ...acc,
+          [item[0]]: path.normalize(item[1]).split('src')[1],
+        }),
+        {}
+      );
+    }
+
+    expect(Object.keys(aliases)).toStrictEqual(Object.keys(mockWebpackAliases));
+    expect(mapAliases(aliases)).toStrictEqual(mapAliases(mockWebpackAliases));
   });
 
   it.todo('should throw error if config is wrong');
