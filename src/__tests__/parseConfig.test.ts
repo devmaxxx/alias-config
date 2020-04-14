@@ -1,14 +1,15 @@
 import { parseConfig } from '../core/parseConfig';
 
-import { mockAliasConfig } from './data.mock';
-import tsConfig from './tsconfig.test.json';
+import { mockAliasConfig } from './__data__/data.mock';
+
+import tsConfig from './__data__/tsconfig.mock.json';
 
 describe('parseConfig:', () => {
   it('should be defined and function', () => {
     expect.assertions(2);
 
     expect(parseConfig).toBeDefined();
-    expect(parseConfig).toStrictEqual(expect.any(Function));
+    expect(parseConfig).toBeInstanceOf(Function);
   });
 
   it('should throw error if config is wrong', () => {

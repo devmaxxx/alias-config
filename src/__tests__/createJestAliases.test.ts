@@ -1,7 +1,7 @@
-import { createJestAliases } from '../createJestAliases';
+import { createJestAliases, getRootPrefix } from '../createJestAliases';
 import { parseConfig } from '../core/parseConfig';
 
-import { mockAliasConfig, mockJestAliases } from './data.mock';
+import { mockAliasConfig, mockJestAliases } from './__data__/data.mock';
 
 jest.mock('../core/parseConfig', () => ({
   parseConfig() {
@@ -14,7 +14,15 @@ describe('createJestAliases', () => {
     expect.assertions(2);
 
     expect(createJestAliases).toBeDefined();
-    expect(createJestAliases).toStrictEqual(expect.any(Function));
+    expect(createJestAliases).toBeInstanceOf(Function);
+  });
+
+  it('should return correct root prefix', () => {
+    expect.assertions(1);
+
+    const prefix = getRootPrefix('/');
+
+    expect(prefix).toBeDefined();
   });
 
   it('should return aliases', () => {
@@ -26,6 +34,4 @@ describe('createJestAliases', () => {
 
     expect(aliases).toStrictEqual(mockJestAliases);
   });
-
-  it.todo('should throw error if config is wrong');
 });

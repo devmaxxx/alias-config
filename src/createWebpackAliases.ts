@@ -3,8 +3,8 @@ import path from 'path';
 import { AliasConfig } from './types';
 import { createAliases } from './core/createAliases';
 
-function replacePath(value: string): string {
-  return value.replace(/(\/\*\*)*\/\*$/, '');
+export function replacePath(path: string): string {
+  return path.replace(/(\/\*\*)*\/\*$/, '');
 }
 
 export function createWebpackAliases(config: AliasConfig) {
