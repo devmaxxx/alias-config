@@ -1,8 +1,8 @@
-import { parseConfig } from '../core/parseConfig';
+import { parseConfig } from '../../core/parseConfig';
 
-import { mockAliasConfig } from './__data__/data.mock';
+import { mockAliasConfig } from '../__data__/data.mock';
 
-import tsConfig from './__data__/tsconfig.mock.json';
+import tsConfig from '../__data__/tsconfig.mock.json';
 
 describe('parseConfig:', () => {
   it('should be defined and function', () => {
