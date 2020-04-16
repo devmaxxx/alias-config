@@ -1,7 +1,3 @@
 describe('createAliases', () => {
-  it('should be true', () => {
-    expect.assertions(1);
-
-    expect(1).toBe(1);
-  });
+  it.todo('should return correct aliases');
 });

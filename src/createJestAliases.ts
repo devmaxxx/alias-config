@@ -1,16 +1,14 @@
-import { AliasConfig } from './types';
+import {
+  ConfigPathKey,
+  ConfigPathValue,
+  AliasConfig,
+  AliasOptions,
+} from './types';
+
 import { createAliases } from './core/createAliases';
 
-/**
- * Replace baseUrl to jest root prefix
- * @param baseUrl BaseUrl in config
- */
-export function getRootPrefix(baseUrl: string): string {
-  const jestRootPrefix = '<rootDir>/';
-
-  return baseUrl.startsWith('./')
-    ? baseUrl.replace('./', jestRootPrefix)
-    : `${jestRootPrefix}${baseUrl}`;
+export function replaceBaseUrl(baseUrl: string): string {
+  return baseUrl.replace(/(\.)?(\/)?/, '<rootDir>/');
 }
 
 export function replaceKeyPath(path: string): string {
@@ -21,15 +19,27 @@ export function replaceValuePath(path: string): string {
   return path.replace(/\.\/\*|\*/, '$1');
 }
 
+function jestKeyMapper(
+  value: ConfigPathKey,
+  config: AliasConfig,
+  options: AliasOptions
+): string {
+  return replaceKeyPath(value);
+}
+
+function jestValueMapper(
+  value: ConfigPathValue,
+  config: AliasConfig,
+  options: AliasOptions
+): string {
+  const baseUrl = replaceBaseUrl(config.baseUrl);
+
+  return `${baseUrl}/${replaceValuePath(value[0])}`;
+}
+
 export function createJestAliases(config: AliasConfig) {
   return createAliases(config, {
-    keyMapper(key) {
-      return replaceKeyPath(key);
-    },
-    valueMapper(value, config) {
-      const rootPrefix = getRootPrefix(config.baseUrl);
-
-      return `${rootPrefix}/${replaceValuePath(value[0])}`;
-    },
+    keyMapper: jestKeyMapper,
+    valueMapper: jestValueMapper,
   });
 }

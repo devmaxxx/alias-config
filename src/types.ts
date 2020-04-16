@@ -1,12 +1,12 @@
-export type Aliases = { [key: string]: string };
-
-export type ConfigPaths = { [key: string]: string[] };
-export interface Config {
+export type ConfigPathKey = string;
+export type ConfigPathValue = string[];
+export type ConfigPaths = { [key: string]: ConfigPathValue };
+export type Config = {
   compilerOptions?: {
     baseUrl?: string;
     paths?: ConfigPaths;
   };
-}
+};
 
 export type AliasConfig = {
   paths: ConfigPaths;
@@ -14,15 +14,21 @@ export type AliasConfig = {
   dirname: string;
 };
 
+export type Aliases = { [key: string]: string };
+
+export type AliasKeyMapper = (
+  value: ConfigPathKey,
+  config: AliasConfig,
+  options: AliasOptions
+) => string;
+
+export type AliasValueMapper = (
+  value: ConfigPathValue,
+  config: AliasConfig,
+  options: AliasOptions
+) => string;
+
 export type AliasOptions = {
-  keyMapper: (
-    value: string,
-    config: AliasConfig,
-    options: AliasOptions
-  ) => string;
-  valueMapper: (
-    value: string[],
-    config: AliasConfig,
-    options: AliasOptions
-  ) => string;
+  keyMapper: AliasKeyMapper;
+  valueMapper: AliasValueMapper;
 };

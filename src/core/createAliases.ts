@@ -1,4 +1,10 @@
-import { Aliases, AliasOptions, AliasConfig } from '../types';
+import {
+  ConfigPathKey,
+  ConfigPathValue,
+  Aliases,
+  AliasOptions,
+  AliasConfig,
+} from '../types';
 
 export function createAliases(
   aliasConfig: AliasConfig,
@@ -10,7 +16,7 @@ export function createAliases(
 }
 
 function pathMapper(
-  path: [string, string[]],
+  path: [ConfigPathKey, ConfigPathValue],
   config: AliasConfig,
   options: AliasOptions
 ): Aliases {

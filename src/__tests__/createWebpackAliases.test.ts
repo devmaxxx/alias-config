@@ -1,6 +1,8 @@
+import path from 'path';
+
 import { createWebpackAliases } from '../createWebpackAliases';
 import { parseConfig } from '../core/parseConfig';
-import path from 'path';
+
 import { mockAliasConfig, mockWebpackAliases } from './__data__/data.mock';
 
 jest.mock('../core/parseConfig', () => ({
@@ -16,6 +18,8 @@ describe('createWebpackAliases', () => {
     expect(createWebpackAliases).toBeDefined();
     expect(createWebpackAliases).toBeInstanceOf(Function);
   });
+
+  it.todo('should return correct path after replace');
 
   it('should return aliases', () => {
     expect.assertions(2);
